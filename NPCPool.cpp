@@ -30,6 +30,10 @@ Pool::~Pool()
 void *Pool::allocate()
 {
   if (!free_indices.empty())
+  {    
+  throw std::bad_alloc(); 
+  }
+  else
   {
     std::size_t index = free_indices.back();
     free_indices.pop_back();
@@ -39,10 +43,6 @@ void *Pool::allocate()
       std::cout << "Allocated slot at index " << index << "\n";
     }
     return get_slot(index);
-  }
-  else
-  {
-    throw std::bad_alloc();
   }
 }
 
