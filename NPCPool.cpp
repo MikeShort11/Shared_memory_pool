@@ -29,7 +29,7 @@ Pool::~Pool()
 
 void *Pool::allocate()
 {
-  if (!free_indices.empty())
+  if (free_indices.empty())
   {    
   throw std::bad_alloc(); 
   }
@@ -48,10 +48,9 @@ void *Pool::allocate()
 
 void Pool::deallocate(void *ptr)
 {
-  //reinterpret casts to make pointer arithmatic work
-  std::byte* base = reinterpret_cast<std::byte*>(_memory_block);
-  std::byte* p = reinterpret_cast<std::byte*>(ptr);
-  std::size_t index = (p - base) / _block_size;
+  //static cast to make pointer arithmatic work
+  std::byte* p = static_cast<std::byte*>(ptr);
+  std::size_t index = (p - _memory_block) / _block_size;
 
   free_indices.push_back(index);
   --live_npcs;

@@ -20,8 +20,8 @@ private:
     // (nodiscard means throw if the output of this member is being ignored)↪→
     [[nodiscard]] void *get_slot(std::size_t index)
     {
-        // TODO: Return address of slot at given index
-        return _memory_block + index * _block_size;
+        // TODO: Check if this return address or some other int
+        return _memory_block + (index * _block_size);
     }
     // Get a safe view of the memory
     // this is optional, but recommended
