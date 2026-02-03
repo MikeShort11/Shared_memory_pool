@@ -23,7 +23,6 @@ public:
     static void operator delete(void *ptr)
     {
         _pool.deallocate(ptr);
-        free(ptr);
     };
     static void profile() { _pool.profile(); }
     friend std::ostream &operator<<(std::ostream &os, const NPC &npc)
