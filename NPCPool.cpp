@@ -1,5 +1,5 @@
 #include "NPCPool.h"
-#include "npc.h" //TODO: probably change this after NPC in done
+#include "NPC.h" //TODO: probably change this after NPC in done
 #include <stdexcept>
 
 //_____________Constuctor / Destructor_____________//
@@ -20,18 +20,18 @@ Pool::Pool(std::size_t count, bool trace)
 }
 
 Pool::~Pool()
+
+    if (_memory_block != nullptr)
 {
-  if (_memory_block != nullptr)
-  {
-    delete[] _memory_block;
-  }
+  delete[] _memory_block;
+}
 }
 
 void *Pool::allocate()
 {
   if (free_indices.empty())
-  {    
-  throw std::bad_alloc(); 
+  {
+    throw std::bad_alloc();
   }
   else
   {
@@ -48,21 +48,24 @@ void *Pool::allocate()
 
 void Pool::deallocate(void *ptr)
 {
-  //static cast to make pointer arithmatic work
-  std::byte* p = static_cast<std::byte*>(ptr);
+  // static cast to make pointer arithmatic work
+  std::byte *p = static_cast<std::byte *>(ptr);
   std::size_t index = (p - _memory_block) / _block_size;
 
   free_indices.push_back(index);
   --live_npcs;
-  if (trace_enabled) {
+  if (trace_enabled)
+  {
     std::cout << "Deallicated Item at index " << index << ".";
   }
 }
 
-void Pool::profile() const {
-  std::cout <<  "Number of live NPC's: " << live_npcs;
+void Pool::profile() const
+{
+  std::cout << "Number of live NPC's: " << live_npcs;
   std::cout << "Avalible Indexes: ";
-  for (int i=0; i < free_indices.size(); i++){
+  for (int i = 0; i < free_indices.size(); i++)
+  {
     std::cout << free_indices[i];
   }
 }
