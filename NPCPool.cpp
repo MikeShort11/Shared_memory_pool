@@ -20,11 +20,12 @@ Pool::Pool(std::size_t count, bool trace)
 }
 
 Pool::~Pool()
-
-    if (_memory_block != nullptr)
 {
-  delete[] _memory_block;
-}
+
+  if (_memory_block != nullptr)
+  {
+    delete[] _memory_block;
+  }
 }
 
 void *Pool::allocate()
