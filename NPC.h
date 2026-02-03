@@ -26,4 +26,10 @@ public:
         free(ptr);
     };
     static void profile() { _pool.profile(); }
+    friend std::ostream &operator<<(std::ostream &os, const NPC &npc)
+    {
+        // Should output: "NPC[name='Goblin_247', type='enemy', pos=(5,10), hp=100]"
+        os << "NPC[name='" << npc._name << "', type='" << npc._type << "', pos=(" << npc._x << "," << npc._y << "), hp=" << npc._health << "]";
+        return os;
+    }
 };
