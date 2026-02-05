@@ -32,6 +32,10 @@ int main()
   {
     delete npc;
   }
+  for (int i = 0; i < npcs.size(); i++)
+  {
+    npcs[i] = nullptr;
+  }
   // Final profile
   NPC::profile();
   return 0;

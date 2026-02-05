@@ -41,7 +41,8 @@ void *Pool::allocate()
     ++live_npcs;
     if (trace_enabled)
     {
-      std::cout << "Allocated slot at index " << index << "\n";
+      std::cout << "Allocated slot at index " << index << "\n"
+                << std::endl;
     }
     return get_slot(index);
   }
@@ -53,20 +54,27 @@ void Pool::deallocate(void *ptr)
   std::byte *p = static_cast<std::byte *>(ptr);
   std::size_t index = (p - _memory_block) / _block_size;
 
+  for (int i = 0; i < free_indices.size(); i++)
+  {
+    if (free_indices[i] == index)
+    {
+      throw std::bad_alloc(); // probably the wrong error, but i think i need this check
+    }
+  }
   free_indices.push_back(index);
   --live_npcs;
   if (trace_enabled)
   {
-    std::cout << "Deallicated Item at index " << index << ".";
+    std::cout << "Deallicated Item at index " << index << "." << std::endl;
   }
 }
 
 void Pool::profile() const
 {
-  std::cout << "Number of live NPC's: " << live_npcs;
-  std::cout << "Avalible Indexes: ";
+  std::cout << "Number of live NPC's: " << live_npcs << std::endl;
+  std::cout << "Avalible Indexes: " << std::endl;
   for (int i = 0; i < free_indices.size(); i++)
   {
-    std::cout << free_indices[i];
+    std::cout << free_indices[i] << " ";
   }
 }
