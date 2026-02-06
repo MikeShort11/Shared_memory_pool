@@ -12,8 +12,7 @@ private:
     static inline Pool _pool{100, true};
 
 public:
-    NPC(const std::string &name, const std::string &type, int x, int y, int health)
-        : _name(name), _type(type), _x(x), _y(y), _health(health) {}
+    NPC(const std::string &name, const std::string &type, int x, int y, int health);
     ~NPC() {};
     static void *operator new(std::size_t);
     static void operator delete(void *ptr);

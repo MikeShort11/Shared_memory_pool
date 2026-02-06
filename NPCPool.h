@@ -9,20 +9,14 @@ class Pool
 {
 private:
     // Memory storage
-    std::byte *_memory_block; // pointer to array of bytes ('new'size of array)↪→
-    std::size_t _block_size;  // how we divide up the pool (size
-    // Free slot tracking using vector
+    std::byte *_memory_block;              // pointer to array of bytes ('new'size of array)↪→
+    std::size_t _block_size;               // how we divide up the pool (size
     std::vector<std::size_t> free_indices; // Indices of free
-                                           // Statistics
     std::size_t live_npcs = 0;             // how many npcs exist in the pool
     bool trace_enabled;                    // if true, dump lots of extra info to stdout↪→
+
     // get memory address for an index
-    // (nodiscard means throw if the output of this member is being ignored)↪→
-    [[nodiscard]] void *get_slot(std::size_t index)
-    {
-        // TODO: Check if this return address or some other int
-        return _memory_block + (index * _block_size);
-    }
+    [[nodiscard]] void *get_slot(std::size_t index);
     // Get a safe view of the memory
     // this is optional, but recommended
     //[[nodiscard]] std::span<std::byte> get_memory_span();
